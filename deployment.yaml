@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: deployment
+kind: Deployment
   
 metadata:
   name: nginx
@@ -8,43 +8,43 @@ metadata:
     tier: frontend
     component: frontend
 spec:
-  Replicaset: 3
+  replicas: 3
   selector:
-   matchlabels:
+   matchLabels:
       project: roboshop
       tier: frontend
       component: frontend
   template:
    metadata:
-   labels:
-    project: roboshop
-    tier: frontend
-    component: frontend
-  spec:
-   containers:
-    - name: nginx
-      image: nginx:latest
-      ports:
-      - container: 80
+     labels:
+       project: roboshop
+       tier: frontend
+       component: frontend
+   spec:
+     containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+         - containerPort: 80
 
 ---
 apiVersion: v1  
-kind: service
+kind: Service
 metadata:
   name: nginx
   labels:
     project: roboshop
     tier: frontend
     component: frontend
-    purpose: deployment
+    
 spec:
   selector:
-    matchlabels:
+    
       project: roboshop
       tier: frontend
       component: frontend
-      purpose: deployment
-    ports:
+      
+  ports:
       - protocol: TCP
         port: 80
         targetPort: 80
