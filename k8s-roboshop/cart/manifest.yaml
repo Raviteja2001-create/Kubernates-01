@@ -1,61 +1,62 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: catalogue-config
+  name: cart-config
   namespace: roboshop  
 data:
-   MONGO: "true"
-   MONGO_URL: "mongodb://mongodb:27017/catalogue"
+   REDIS_HOST: redis
+   CATALOGUE_HOST: catalogue
+   CATALOGUE_PORT: 8080
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: catalogue
+  name: cart
   namespace: roboshop
   # labels related to deployment resource
   labels:
     project: roboshop
     tier: backend
-    component: catalogue
+    component: cart
 spec:
   replicas: 1
   selector:
     matchLabels:
       project: roboshop
       tier: backend
-      component: catalogue   
+      component: cart   
   template:
     metadata:
      labels: 
        project: roboshop
        tier: backend
-       component: catalogue   
+       component: cart   
     spec:
       containers:
-       - name: catalogue
-         image: joindevops/catalogue:4.0.0
+       - name: cart
+         image: joindevops/cart:4.0.0
          envFrom:
          - configMapRef:
-             name: catalogue-config
+             name: cart-config
            
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: catalogue
+  name: cart
   namespace: roboshop
   # servicer labels
   labels:
     project: roboshop
     tier: backend
-    component: catalogue
+    component: cart
 spec:
   # Service uses the below labels to select the pods
   selector:
     project: roboshop
     tier: backend
-    component: catalogue
+    component: cart
   ports:
     - protocol: TCP
       port: 8080 # service port

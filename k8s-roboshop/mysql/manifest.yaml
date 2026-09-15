@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+  namespace: roboshop
+  labels:
+    name: mysql
+    project: roboshop
+    tier: database
+    environment: production
+spec:
+  replicas: 1
+  selector: 
+   matchLabels:  
+     name: mysql
+     project: roboshop
+     tier: database
+     environment: production
+  template:
+   metadata:
+     labels:
+       name: mysql
+       project: roboshop
+       tier: database
+       environment: production
+   spec:
+     containers:
+      - name: mysql
+        image: joindevops/mysql:4.0.0
+        ports:
+         - containerPort: 3306
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  namespace: roboshop
+  # servicer labels
+  labels:
+    name: mysql
+    project: roboshop
+    tier: database
+    environment: production
+spec:
+  # Service uses the below labels to select the pods
+  selector:
+  
+    name: mysql
+    project: roboshop
+    tier: database
+    environment: production
+  ports:
+    - protocol: TCP
+      port: 3306 # service port
+      targetPort: 3306 # container port         
+
+       

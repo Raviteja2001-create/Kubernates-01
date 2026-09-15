@@ -38,6 +38,7 @@ metadata:
     component: frontend
     
 spec:
+  type: LoadBalancer
   selector:
     
       project: roboshop
