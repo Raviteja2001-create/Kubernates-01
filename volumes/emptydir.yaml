@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+    - image: nginx
+      name: nginx
+      volume mounts:
+       - mountpath: /var/log/nginx
+         name: cache-volume
+    - image: almalinux:9
+      name: almalinux     
+      volume mounts:
+        - mountpath: /red/nginx-logs
+          name: cache-volume
+          readonly: true
+  volumes:
+  - name: cache-volume
+    # this creates intially empty directory in the node where pod scheduled
+    emptyDir:
+      sizeLimit: 500Mi
+
+           
+
+
+  
+        
