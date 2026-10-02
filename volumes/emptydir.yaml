@@ -6,16 +6,16 @@ spec:
   containers:
     - image: nginx
       name: nginx
-      volume mounts:
-       - mountpath: /var/log/nginx
+      volumeMounts:
+       - mountPath: /var/log/nginx
          name: cache-volume
     - image: almalinux:9
       name: almalinux
       command: ["sleep" , "3000"]     
-      volume mounts:
-        - mountpath: /red/nginx-logs
+      volumeMounts:
+        - mountPath: /red/nginx-logs
           name: cache-volume
-          readonly: true
+          readOnly: true
   volumes:
   - name: cache-volume
     # this creates intially empty directory in the node where pod scheduled
