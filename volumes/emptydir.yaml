@@ -10,7 +10,8 @@ spec:
        - mountpath: /var/log/nginx
          name: cache-volume
     - image: almalinux:9
-      name: almalinux     
+      name: almalinux
+      command: ["sleep" , "3000"]     
       volume mounts:
         - mountpath: /red/nginx-logs
           name: cache-volume
