@@ -1,0 +1,4 @@
+Deployment:
+
+  replicas: 1
+  image: joindevops/catalogue:4.0.0
