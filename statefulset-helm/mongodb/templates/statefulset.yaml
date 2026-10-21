@@ -1,0 +1,51 @@
+---
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongodb
+  namespace: roboshop
+  labels:
+    name: mongodb
+    project: roboshop
+    tier: database
+    environment: production
+
+spec:
+  replicas: {{ .Values.Statefulset.replicas }}
+  serviceName: mongodb
+  selector:
+    matchLabels:
+      name: mongodb
+      project: roboshop
+      tier: database
+      environment: production
+
+  template:
+    metadata:
+      labels:
+        name: mongodb
+        project: roboshop
+        tier: database
+        environment: production
+    spec:
+      containers:
+        - name: mongodb
+          image: "{{ .Values.Statefulset.image }}"
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: ebs-volume
+              mountPath: /data/db
+
+  volumeClaimTemplates:
+    - metadata:
+        name: ebs-volume
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        storageClassName: roboshop-statefulset
+        resources:
+          requests:
+            storage: 1Gi
+

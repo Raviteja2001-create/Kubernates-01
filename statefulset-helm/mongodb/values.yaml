@@ -1,0 +1,5 @@
+Statefulset:
+  
+  replicas: 3
+  image: "joindevops/mongodb:4.0.0"
+ 
